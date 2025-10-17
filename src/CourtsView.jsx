@@ -2,6 +2,7 @@ import { Box, Card, Container, Flex, Heading, Text } from "@radix-ui/themes"
 import { useNetworkVariable } from "./networkConfig";
 import { useSuiClient, useSuiClientQuery } from "@mysten/dapp-kit";
 import { useEffect, useState } from "react";
+import { Court } from "./Court";
 
 export const CourtsView = () => {
   const [metadata, setMetadata] = useState([]);
@@ -49,38 +50,24 @@ export const CourtsView = () => {
       const metadata = await suiClient.multiGetObjects({
         ids: courtMetadataIds,
         options: { showContent: true },
-      })
-      .then(metadata => metadata
-        .map(data => data.data?.content.fields.value.fields));
+      });
 
-      //console.log(metadata);
+      const courtsData = metadata.map(data => data.data?.content.fields)
 
-      setMetadata(metadata);
+      setMetadata(courtsData);
     }
   }
 
   const mdCards = metadata.map(md => 
-    <Card key={md.name} size="4">
-      <Box>
-		<Text as="div" size="2" weight="bold">
-		  {md.name}
-		</Text>
-		<Text as="div" size="2" color="gray">
-		  {md.description}
-		</Text>
-          <Text as="div" size="1" color="gray">
-            category: {md.category}
-          </Text>
-        <Flex gap="4">
-          <Text as="div" size="1">
-            min_stake: {md.min_stake} NVR
-          </Text>
-          <Text as="div" size="1">
-            reward: {md.reward} SUI
-          </Text>
-        </Flex>
-	  </Box>
-    </Card>
+    <Court
+      key={md.name}
+      id={md.name}
+      name={md.value.fields.name}
+      description={md.value.fields.description}
+      category={md.value.fields.category}
+      min_stake={md.value.fields.min_stake}
+      reward={md.value.fields.reward}
+    />
   )
 
   return (

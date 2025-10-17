@@ -9,6 +9,9 @@
 2. Copy **court_registry** and **package** addresses from the object changes output to `src/constants.tsx`.
 ![court_registry](/pictures/court_registry.png)
 ![package](/pictures/package.png)
+<br>
+3. Copy the **object type** for NVR coin to `src/constants.tsx`.
+![nvr_type](/pictures/nvr_type.png)
 
 ## Starting your dApp
 
