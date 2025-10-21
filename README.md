@@ -9,9 +9,11 @@
 2. Copy **court_registry** and **package** addresses from the object changes output to `src/constants.tsx`.
 ![court_registry](/pictures/court_registry.png)
 ![package](/pictures/package.png)
-<br>
+<br><br>
 3. Copy the **object type** for NVR coin to `src/constants.tsx`.
 ![nvr_type](/pictures/nvr_type.png)
+<br><br>
+4. Deploy [**packages/contract_kit**](https://github.com/NivraLabs/nivra-court) in the devnet environment and copy package id to `src/constants.tsx`.
 
 ## Starting your dApp
 

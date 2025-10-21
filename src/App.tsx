@@ -3,6 +3,7 @@ import { Box, Container, Flex, Heading } from "@radix-ui/themes";
 import { useNetworkVariable } from "./networkConfig";
 import { CreateCourtDialog } from "./CreateCourtDialog";
 import { CourtsView } from "./CourtsView";
+import { DisputesView } from "./DisputesView";
 
 function App() {
   const packageId = useNetworkVariable('package_id');
@@ -45,6 +46,7 @@ function App() {
         </Flex>
       </Container>
       <CourtsView />
+      <DisputesView />
     </>
   );
 }

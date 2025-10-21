@@ -4,9 +4,11 @@ import { useEffect, useState } from "react"
 import { useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
 import { useNetworkVariable } from "./networkConfig";
 import { Transaction } from "@mysten/sui/transactions";
+import { DisputeDialog } from "./DisputeDialog";
 
 export const Court = (props) => {
   const [stakeAmount, setStakeAmount] = useState(0);
+  const [feeRate, setFeeRate] = useState(0);
   const suiClient = useSuiClient();
   const currentAccount = useCurrentAccount();
   const { mutate: signAndExecute } = useSignAndExecuteTransaction();
@@ -35,6 +37,9 @@ export const Court = (props) => {
         id: innerCourtId,
         options: { showContent: true},
       });
+
+      // set fee rate
+      setFeeRate(innerCourt.data.content.fields.value.fields.fee_rate);
 
       const stakesDynamicFieldId = innerCourt.data.content.fields.value.fields.stakes.fields.id.id;
 
@@ -146,6 +151,7 @@ export const Court = (props) => {
           <Flex gapX="4">
             <Button onClick={withdraw}>Withdraw</Button>
             <StakeDialog court_id={props.id}/>
+            <DisputeDialog court_id={props.id} feeRate={feeRate}/>
           </Flex>
         </Flex>
       </Flex>

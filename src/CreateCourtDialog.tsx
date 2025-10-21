@@ -28,9 +28,9 @@ export const CreateCourtDialog = (props: { adminCapId: string; }) => {
         tx.pure.vector('string', []),
         tx.pure.u64(entries.min_stake as string),
         tx.pure.u64(entries.fee_rate as string),
-        tx.pure.u64(7200),
-        tx.pure.u64(7200),
-        tx.pure.u64(7200),
+        tx.pure.u64(900000),
+        tx.pure.u64(900000),
+        tx.pure.u64(900000),
         tx.object(courtRegistryId),
         tx.object(nivraAdminCapId),
       ]
