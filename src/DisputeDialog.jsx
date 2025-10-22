@@ -50,6 +50,7 @@ export const DisputeDialog = (props) => {
         tx.pure.option('u64', null),
         tx.pure('vector<address>', []),
         tx.pure('vector<vector<u8>>', []),
+        tx.pure.u8(2),
         tx.object.random(),
         tx.object.clock(),
       ]
