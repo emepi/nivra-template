@@ -1,9 +1,10 @@
-import { useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
+import { useCurrentAccount, useSignAndExecuteTransaction } from "@mysten/dapp-kit";
 import { Form, FormControl, FormField, FormLabel, FormSubmit } from "@radix-ui/react-form";
-import { Button, Dialog, Flex, TextArea, TextField } from "@radix-ui/themes";
+import { Button, Dialog, Flex, Text, TextArea, TextField } from "@radix-ui/themes";
 import React from "react";
 import { useNetworkVariable } from "./networkConfig";
 import { coinWithBalance, Transaction } from "@mysten/sui/transactions";
+import { SEAL_KEY_SERVERS, SEAL_PUBLIC_KEYS } from "./constants";
 
 export const DisputeDialog = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -24,6 +25,7 @@ export const DisputeDialog = (props) => {
 
     const tx = new Transaction();
 
+    // random test contract for the dispute
     const contract_id = tx.moveCall({
       target: `${ckPackageId}::test_contract::create_test_contract`,
       arguments: [
@@ -35,24 +37,24 @@ export const DisputeDialog = (props) => {
     tx.moveCall({
       target: `${packageId}::court::open_dispute`,
       arguments: [
-        tx.object(courtId),
-        coinWithBalance({
+        tx.object(courtId), // court
+        coinWithBalance({ // fee in SUI coin, amount = court fee rate * nivsters count
           balance: BigInt(props.feeRate * nivsters),
         }),
-        contract_id,
-        tx.pure.string(description),
-        tx.pure('vector<address>', [currentAccount.address]),
-        tx.pure('vector<string>', options),
-        tx.pure.u8(nivsters),
-        tx.pure.u8(1),
-        tx.pure.option('u64', null),
-        tx.pure.option('u64', null),
-        tx.pure.option('u64', null),
-        tx.pure('vector<address>', []),
-        tx.pure('vector<vector<u8>>', []),
-        tx.pure.u8(2),
-        tx.object.random(),
-        tx.object.clock(),
+        contract_id, // parent contract ID (created above)
+        tx.pure.string(description), //desc
+        tx.pure('vector<address>', [currentAccount.address]), // dispute parties
+        tx.pure('vector<string>', options), // voting options
+        tx.pure.u8(nivsters), // nivster count (in the first round)
+        tx.pure.u8(1), // max appeals
+        tx.pure.option('u64', 180000), // evidence period in ms
+        tx.pure.option('u64', 180000), // voting period in ms
+        tx.pure.option('u64', 180000), // appeal period in ms
+        tx.pure('vector<address>', SEAL_KEY_SERVERS), // seal key servers used
+        tx.pure('vector<vector<u8>>', SEAL_PUBLIC_KEYS), // matching public keys
+        tx.pure.u8(1), // keyserver threshold for decrypting votes
+        tx.object.random(), // random sys. object
+        tx.object.clock(), // clock sys. object
       ]
     });
 
@@ -122,6 +124,7 @@ export const DisputeDialog = (props) => {
             </Flex>
             Fee: {props.feeRate * nivsters / 1_000_000_000} SUI
           </Flex>
+          <Text size="1">Opening a dispute fails if there's not enough nivsters staking.</Text>
           <Flex gap="3" mt="4" justify="end">
             <Dialog.Close>
               <Button variant="soft" color="gray">Cancel</Button>

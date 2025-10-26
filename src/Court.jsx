@@ -20,43 +20,53 @@ export const Court = (props) => {
 
   const getStakedAmount = async () => {
     if (currentAccount) {
+      // Fetch the main "court" object from the blockchain using its ID (passed via props)
       const court = await suiClient.getObject({
         id: props.id,
-        options: { showContent: true },
+        options: { showContent: true }, // include object content in response
       });
 
+      // Extract the ID of the "inner court" dynamic field from the court object
       const innerCourtDynamicFieldId = court.data.content.fields.inner.fields.id.id;
 
+      // Fetch the list of dynamic fields under the "inner court" parent object
       const innerCourtDynamicField = await suiClient.getDynamicFields({
         parentId: innerCourtDynamicFieldId,
       });
 
+      // Get the ID of the first "inner court" object (assuming only one exists)
       const innerCourtId = innerCourtDynamicField.data[0].objectId;
 
+      // Fetch the full "inner court" object by its ID
       const innerCourt = await suiClient.getObject({
         id: innerCourtId,
         options: { showContent: true},
       });
 
-      // set fee rate
       setFeeRate(innerCourt.data.content.fields.value.fields.fee_rate);
 
+      // Extract the dynamic field ID for the "stakes" map (which holds user stake data)
       const stakesDynamicFieldId = innerCourt.data.content.fields.value.fields.stakes.fields.id.id;
 
+      // Fetch all dynamic fields (stake records) under the "stakes" parent
       const stakesDynamicFields = await suiClient.getDynamicFields({
         parentId: stakesDynamicFieldId,
       });
 
+      // Find the specific stake object that belongs to the current user's address
       const userStake = stakesDynamicFields.data.find(stakes => stakes.name.value == currentAccount.address);
       
       if (userStake) {
+        // Get the ID of the stake object
         const stakeId = userStake.objectId;
 
+        // Fetch the detailed stake object
         const stake = await suiClient.getObject({
           id: stakeId,
           options: { showContent: true},
         });
 
+        // Extract the actual staked amount from the stake object data
         const stakedAmount = stake.data.content.fields.value.fields.value.fields.amount;
 
         setStakeAmount(stakedAmount);
@@ -66,8 +76,10 @@ export const Court = (props) => {
 
   const withdraw = () => {
     if (currentAccount) {
-        const tx = new Transaction();
+      const tx = new Transaction();
 
+      // Call the Move smart contract function `withdraw` from the `court` module
+      // passing in the court object ID as an argument
       const nvr_coins = tx.moveCall({
         target: `${packageId}::court::withdraw`,
         arguments: [
@@ -75,8 +87,10 @@ export const Court = (props) => {
         ],
       });
 
+      // Transfer the withdrawn NVR coins back to the user's wallet address
       tx.transferObjects([nvr_coins], tx.pure.address(currentAccount.address));
 
+      // Sign the transaction and execute it on the Sui network
       signAndExecute(
         {
           transaction: tx,

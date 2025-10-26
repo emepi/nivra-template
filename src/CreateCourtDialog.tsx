@@ -18,21 +18,25 @@ export const CreateCourtDialog = (props: { adminCapId: string; }) => {
     const entries = Object.fromEntries(new FormData(event.target as HTMLFormElement));
     const tx = new Transaction();
 
+    // Build a Move call transaction to invoke the `create_court` function
+    // from the `court` module in your on-chain package.
     tx.moveCall({
       target: `${packageId}::court::create_court`,
       arguments: [
-        tx.pure.string(entries.category as string),
-        tx.pure.string(entries.name as string),
-        tx.pure.option('string', null),
-        tx.pure.string(entries.description as string),
-        tx.pure.vector('string', []),
-        tx.pure.u64(entries.min_stake as string),
-        tx.pure.u64(entries.fee_rate as string),
-        tx.pure.u64(900000),
-        tx.pure.u64(900000),
-        tx.pure.u64(900000),
-        tx.object(courtRegistryId),
-        tx.object(nivraAdminCapId),
+        tx.pure.string(entries.category as string), // Court category (e.g., "Civil", "Criminal")
+        tx.pure.string(entries.name as string), // Court name 
+        tx.pure.option('string', null), // Optional court icon (currently none/null)
+        tx.pure.string(entries.description as string), // Text description of the court
+        tx.pure.vector('string', []), // List of required skills or tags (empty for now)
+        tx.pure.u64(entries.min_stake as string), // Minimum stake required to participate
+        tx.pure.u64(entries.fee_rate as string), // Fee rate applied within the court
+        tx.pure.u64(900000), // Default evidence submission period (in milliseconds)
+        tx.pure.u64(900000), // Default voting period (in milliseconds)
+        tx.pure.u64(900000), // Default appeal period (in milliseconds)
+        tx.object(courtRegistryId), // Mutable reference to the main Court Registry object
+        tx.object(nivraAdminCapId), // Admin capability object, proving caller has permission
+        // ctx: &mut TxContext
+        // (This argument is automatically added by the Sui runtime; not provided manually)
       ]
     });
 

@@ -9,6 +9,8 @@ export const DisputesView = () => {
   const currentAccount = useCurrentAccount();
   const packageId = useNetworkVariable("package_id");
 
+  // Query the Sui blockchain for all objects owned by the current account
+  // that match the struct type `${packageId}::dispute::VoterCap`.
   const {data} = useSuiClientQuery(
     "getOwnedObjects",
     {
@@ -23,15 +25,21 @@ export const DisputesView = () => {
     }
   );
 
+  // Async function to fetch all dispute data associated with the user's VoterCap objects
   const getDisputes = async () => {
     if (data) {
+      // Step 1: Extract the `dispute_id` field from each VoterCap object
+      // Each VoterCap links the voter to a specific dispute on-chain
       const dispute_ids = data.data.map((data) => data.data.content.fields.dispute_id);
       
+      // Step 2: Fetch all disputes at once using their object IDs
+      // `multiGetObjects` is more efficient than fetching each one separately
       const disputes = await suiClient.multiGetObjects({
         ids: dispute_ids,
         options: { showContent: true },
       });
 
+      // Step 3: Extract just the useful field data from each dispute object
       const dispute_data = disputes.map((dispute) => dispute.data.content.fields);
 
       setDisputes(dispute_data);
@@ -73,6 +81,10 @@ export const DisputesView = () => {
           <Text as="div" size="1">
             Appeal Period Ends: {(new Date(parseInt(dispute.timetable.fields.round_init_ms) + parseInt(dispute.timetable.fields.appeal_period_ms) + parseInt(dispute.timetable.fields.evidence_period_ms) + parseInt(dispute.timetable.fields.voting_period_ms))).toLocaleString()}
           </Text>
+        </Flex>
+        <Separator orientation="vertical" size="3" my="3"/>
+        <Flex direction="column-reverse">
+          <a href={"/disputes/" + dispute.id.id}>Enter Court</a>
         </Flex>
       </Flex>
     </Card>
