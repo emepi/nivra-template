@@ -6,7 +6,7 @@ import { coinWithBalance, Transaction } from "@mysten/sui/transactions";
 import { EvidenceDialog } from "./EvidenceDialog";
 import { SealClient, SessionKey } from "@mysten/seal";
 import { fromHex } from "@mysten/sui/utils";
-import { SEAL_KEY_SERVERS } from "./constants";
+import { SEAL_KEY_SERVERS, WALRUS_AGGREGATOR_URL } from "./constants";
 
 export const NivraCourt = (props) => {
     const [dispute, setDispute] = useState(null);
@@ -17,8 +17,6 @@ export const NivraCourt = (props) => {
     const packageId = useNetworkVariable("package_id");
     const currentAccount = useCurrentAccount();
     const { mutate: signPersonalMessage } = useSignPersonalMessage();
-
-    const AGGREGATOR_URL = "https://aggregator.walrus-testnet.walrus.space";
 
     const sealClient = new SealClient({
         suiClient,
@@ -80,7 +78,6 @@ export const NivraCourt = (props) => {
 
             if (dispute) {
                 const data = dispute.data?.content.fields;
-                console.log(dispute);
                 setDispute(data);
             }
         }
@@ -170,7 +167,7 @@ export const NivraCourt = (props) => {
                 {ev.fields.blob_id && 
                 <DataList.Item>
                     <DataList.Label minWidth="88px">File:</DataList.Label>
-			        <DataList.Value><a href={`${AGGREGATOR_URL}/v1/blobs/${ev.fields.blob_id}`}>Link</a></DataList.Value>
+			        <DataList.Value><a href={`${WALRUS_AGGREGATOR_URL}/v1/blobs/${ev.fields.blob_id}`}>Link</a></DataList.Value>
                 </DataList.Item>
                 }
             </DataList.Root>
@@ -195,9 +192,9 @@ export const NivraCourt = (props) => {
           threshold: 1,
           packageId: packageId,
           id: dispute.id.id,
-          data: new Uint8Array([opt]),
+          data: new Uint8Array([opt]), // vote has to fit in 1 byte
           aad: fromHex(currentAccount.address),
-          demType: 1,
+          demType: 1, // Hmac256Ctr
         });
 
         // could be used to decrypt the users vote for display

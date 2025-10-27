@@ -1,88 +1,65 @@
 import { Form, FormControl, FormField, FormLabel, FormSubmit } from "@radix-ui/react-form"
 import { Button, Dialog, Flex, TextArea, TextField } from "@radix-ui/themes"
-import React, { FormEvent } from "react";
+import React from "react";
 import { useNetworkVariable } from "./networkConfig";
 import { Transaction } from "@mysten/sui/transactions";
-import { useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
+import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
+import { WALRUS_PUBLISHER_URL } from "./constants";
 
 export const EvidenceDialog = (props) => {
   const [open, setOpen] = React.useState(false);
   const { mutate: signAndExecute } = useSignAndExecuteTransaction();
-  const suiClient = useSuiClient();
-  const currentAccount = useCurrentAccount();
   const packageId = useNetworkVariable('package_id');
   const partyCap = props.partyCap;
-
-  const publisherUrl = 'https://publisher.walrus-testnet.walrus.space';
 
   const submitForm = async (event) => {
     event.preventDefault();
     const entries = Object.fromEntries(new FormData(event.target));
     const tx = new Transaction();
 
-    // Upload file to walrus publisher if it exists
+    let type = null;
+    let subtype = null;
+    let blobId = null;
+
+    // Upload a file to walrus publisher if provided
     if (entries.file.size > 0) {
       const file_type = entries.file.type.split("/");
 
-      await fetch(`${publisherUrl}/v1/blobs?epochs=${3}`, {
+      const res = await fetch(`${WALRUS_PUBLISHER_URL}/v1/blobs?epochs=${3}`, {
         method: 'PUT',
         body: entries.file,
-      }).then((response) => {
-        if (response.status === 200) {
-          response.json().then((info) => {
-            let type = file_type[0];
-            let subtype = file_type[1];
-            let blobId = info.newlyCreated.blobObject.blobId;
-
-            console.log(partyCap.id.id);
-
-            tx.moveCall({
-              target: `${packageId}::dispute::add_evidence`,
-              arguments: [
-                tx.object(props.disputeID), // dispute
-                tx.pure.string(entries.description), // desc
-                tx.pure.option('string', blobId), // walrus blob id
-                tx.pure.option('string', type), // file type
-                tx.pure.option('string', subtype), // file subtype
-                tx.object(partyCap.id.id), // party cap
-                tx.object.clock(),
-              ]
-            });
-
-            signAndExecute(
-              {
-                transaction: tx
-              },
-              {
-                onSuccess: (_) => location.reload(),
-              }
-            );
-          })
-        }
-      });
-    } else {
-      tx.moveCall({
-        target: `${packageId}::dispute::add_evidence`,
-        arguments: [
-          tx.object(props.disputeID),
-          tx.pure.string(entries.description),
-          tx.pure.option('string', null),
-          tx.pure.option('string', null),
-          tx.pure.option('string', null),
-          tx.object(partyCap.id.id),
-          tx.object.clock(),
-        ]
       });
 
-      signAndExecute(
-        {
-          transaction: tx
-        },
-        {
-          onSuccess: (_) => location.reload(),
-        }
-      );
-    }
+      if (res.status === 200) {
+        const info = await res.json();
+
+        type = file_type[0];
+        subtype = file_type[1];
+        blobId = info.newlyCreated.blobObject.blobId;
+      }
+    } 
+
+    tx.moveCall({
+      target: `${packageId}::dispute::add_evidence`,
+      arguments: [
+        tx.object(props.disputeID), // dispute
+        tx.pure.string(entries.description), // desc
+        tx.pure.option('string', blobId), // walrus blob id
+        tx.pure.option('string', type), // file type
+        tx.pure.option('string', subtype), // file subtype
+        tx.object(partyCap.id.id), // party cap
+        tx.object.clock(),
+      ]
+    });
+
+    signAndExecute(
+      {
+        transaction: tx
+      },
+      {
+        onSuccess: (_) => location.reload(),
+      }
+    );
   }
   
   return (
