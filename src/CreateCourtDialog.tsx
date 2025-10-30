@@ -23,7 +23,8 @@ export const CreateCourtDialog = (props: { adminCapId: string; }) => {
     tx.moveCall({
       target: `${packageId}::court::create_court`,
       arguments: [
-        tx.pure.string(entries.category as string), // Court category (e.g., "Civil", "Criminal")
+        tx.pure.bool(false), // is AI court?
+        tx.pure.string(entries.category as string), // Court category
         tx.pure.string(entries.name as string), // Court name 
         tx.pure.option('string', null), // Optional court icon (currently none/null)
         tx.pure.string(entries.description as string), // Text description of the court

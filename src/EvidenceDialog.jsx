@@ -20,6 +20,7 @@ export const EvidenceDialog = (props) => {
     let type = null;
     let subtype = null;
     let blobId = null;
+    let file_name = null;
 
     // Upload a file to walrus publisher if provided
     if (entries.file.size > 0) {
@@ -36,15 +37,17 @@ export const EvidenceDialog = (props) => {
         type = file_type[0];
         subtype = file_type[1];
         blobId = info.newlyCreated.blobObject.blobId;
+        file_name = entries.file.name;
       }
     } 
 
     tx.moveCall({
-      target: `${packageId}::dispute::add_evidence`,
+      target: `${packageId}::evidence::create_evidence`,
       arguments: [
         tx.object(props.disputeID), // dispute
         tx.pure.string(entries.description), // desc
         tx.pure.option('string', blobId), // walrus blob id
+        tx.pure.option('string', file_name),
         tx.pure.option('string', type), // file type
         tx.pure.option('string', subtype), // file subtype
         tx.object(partyCap.id.id), // party cap

@@ -1,18 +1,26 @@
 export const DEVNET_PACKAGE_ID = "0xd97a5857507ffc9784349fe42fc5c953193f0ec417d16214437ceceefb94ba97";
-export const TESTNET_PACKAGE_ID = "0x8560ddc3ac94a8ea033c644e35c1731f52476d1ac12fb96ad5fdde1c5defabf2";
+export const TESTNET_PACKAGE_ID = "0xaf23b09e8a9e0cf66755acbf45343c0f5441d4dc20986a5c1d47c35884243818";
 export const MAINNET_PACKAGE_ID = "0x1234"; // not deployed
 
 export const DEVNET_REGISTRY_ID = "0x7431de559f4220eaf436f67c5aa71b57800750d2f163b50a59acc3ca6a701ccb";
-export const TESTNET_REGISTRY_ID = "0xa28ec366feec096633223db84ef7a6ec82bc8902af3a449155dc02cdfaa583b2";
+export const TESTNET_REGISTRY_ID = "0x09e25df9d03dc50cf41ba5f0504dd0bb1d5c731818699bfb1776fab4393e9e5d";
 export const MAINNET_REGISTRY_ID = "0x1234"; // not deployed
 
 export const DEVNET_COIN_TYPE = "0xd97a5857507ffc9784349fe42fc5c953193f0ec417d16214437ceceefb94ba97::nvr::NVR";
-export const TESTNET_COIN_TYPE = "0xbfc6bfe7e3a40b41d8886b4fcfc5b8bbd82d180544aafd2625f4eb687c366499::nvr::NVR";
+export const TESTNET_COIN_TYPE = "0xef700b49f19ff87afcdfa5dc6f6e3e8843d34052a908cf0a73e3fc7ee1d713fb::nvr::NVR";
 export const MAINNET_COIN_TYPE = "0x1234"; // not deployed
 
 export const DEVNET_CK_PACKAGE_ID = "0x1d657ec0b15763170f974abe16396e97b56779cfecf61aa696617f1d3158f0c2";
-export const TESTNET_CK_PACKAGE_ID = "0x86f36885a1e9abc36ee744c9669fe2e88c5feecdc9b64898173dee0994bfd170";
+export const TESTNET_CK_PACKAGE_ID = "0xbb135cdbe7759cb31f73c17a4f7b4201b932b46fdce1da1efbebe44158b4f085";
 export const MAINNET_CK_PACKAGE_ID = "0x1234"; // not deployed
+
+export const DEVNET_FAUCET_PACKAGE_ID = "0x1234"; // not deployed
+export const TESTNET_FAUCET_PACKAGE_ID = "0xa450df3e42feed300cdba030165960048e79067d83c1d26263180aea5977c06a";
+export const MAINNET_FAUCET_PACKAGE_ID = "0x1234"; // not deployed
+
+export const DEVNET_FAUCET_ID = "0x1234"; // not deployed
+export const TESTNET_FAUCET_ID = "0xa2474ead68d43164ab29809bb5a858cf4ec24fd907dc4871d87e8bb87236e9e0";
+export const MAINNET_FAUCET_ID = "0x1234"; // not deployed
 
 // testnet
 export const SEAL_KEY_SERVERS = [

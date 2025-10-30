@@ -15,6 +15,7 @@ export const NivraCourt = (props) => {
     const suiClient = useSuiClient();
     const { mutate: signAndExecute } = useSignAndExecuteTransaction();
     const packageId = useNetworkVariable("package_id");
+    const registryId = useNetworkVariable("registry_id");
     const currentAccount = useCurrentAccount();
     const { mutate: signPersonalMessage } = useSignPersonalMessage();
 
@@ -153,26 +154,42 @@ export const NivraCourt = (props) => {
         return winner_option ? winner_option : "Not decided yet";
     }
 
-    const evidenceItems = (ev) => ev.fields.value.fields.evidence.map((ev, i) => 
-        <Box p="4" style={{border: "1px solid gray", borderRadius: "5px"}} key={i}>
+    const EvidenceItem = (props) => {
+        const [evData, setEvData] = useState(null);
+
+        useEffect(() => {
+            suiClient.getObject({
+                id: props.id,
+                options: { showContent: true },
+            }).then(res => setEvData(res));
+        }, [])
+
+        return (
+            evData &&
+            <Box p="4" style={{border: "1px solid gray", borderRadius: "5px"}}>
             <DataList.Root size="1">
                 <DataList.Item>
                     <DataList.Label minWidth="88px">No:</DataList.Label>
-			        <DataList.Value>{i + 1}</DataList.Value>
+			        <DataList.Value>{props.i + 1}</DataList.Value>
                 </DataList.Item>
                 <DataList.Item>
                     <DataList.Label minWidth="88px">Description:</DataList.Label>
-			        <DataList.Value>{ev.fields.description}</DataList.Value>
+			        <DataList.Value>{evData.data.content.fields.description}</DataList.Value>
                 </DataList.Item>
-                {ev.fields.blob_id && 
+                {evData.data.content.fields.blob_id && 
                 <DataList.Item>
                     <DataList.Label minWidth="88px">File:</DataList.Label>
-			        <DataList.Value><a href={`${WALRUS_AGGREGATOR_URL}/v1/blobs/${ev.fields.blob_id}`}>Link</a></DataList.Value>
+			        <DataList.Value><a href={`${WALRUS_AGGREGATOR_URL}/v1/blobs/${evData.data.content.fields.blob_id}`}>Link</a></DataList.Value>
                 </DataList.Item>
                 }
             </DataList.Root>
-        </Box>
-    )
+            </Box>
+        );
+    }
+
+    const evidenceItems = (ev) => ev.fields.value.map((ev, i) => 
+        <EvidenceItem id={ev} i={i} key={i}/>
+    );
 
     const evidence = () => dispute?.evidence.fields.contents.map((ev) =>
         <Card key={ev.fields.key}>
@@ -372,6 +389,7 @@ export const NivraCourt = (props) => {
             arguments: [
                 tx.object(dispute.court),
                 tx.object(dispute.id.id),
+                tx.object(registryId),
                 tx.object.clock(),
             ]
         });

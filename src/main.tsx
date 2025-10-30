@@ -10,6 +10,7 @@ import App from "./App.js";
 import { networkConfig } from "./networkConfig.ts";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { DisputeFullView } from "./DisputeFullView.tsx";
+import { FaucetView } from "./FaucetView.jsx";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "/disputes/:dispute_id",
     Component: DisputeFullView,
+  },
+  {
+    path: "/faucet",
+    Component: FaucetView,
   }
 ])
 

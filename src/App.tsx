@@ -12,15 +12,14 @@ function App() {
   // Query the Sui blockchain for objects owned by the current account.
   // Specifically, we're looking for objects of type `NivraAdminCap` within the `court_registry` module of the given package.
   const { data, } = useSuiClientQuery(
-    "getOwnedObjects", // Sui RPC method to get objects owned by an address
+    "getOwnedObjects",
     {
-      owner: currentAccount?.address as string, // The Sui address of the current user
+      owner: currentAccount?.address as string,
       options: {
-        showContent: true, // Include full content of the object in the response
-        showType: true, // Include the object type information
+        showContent: true,
+        showType: true, 
       },
       filter: {
-        // Filter objects to only include those matching this specific struct type
         StructType: `${packageId}::court_registry::NivraAdminCap`,
       }
     }
@@ -37,6 +36,7 @@ function App() {
       <Flex position="sticky" p="4" justify="between" align="center" style={{borderBottom: "1px solid var(--gray-a2)",}}>
         <Box>
           <Heading>Nivra Template</Heading>
+          <a href="/faucet">NVR Faucet</a>
         </Box>
         <Box>
           <ConnectButton />
