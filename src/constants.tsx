@@ -11,7 +11,7 @@ export const TESTNET_COIN_TYPE = "0xef700b49f19ff87afcdfa5dc6f6e3e8843d34052a908
 export const MAINNET_COIN_TYPE = "0x1234"; // not deployed
 
 export const DEVNET_CK_PACKAGE_ID = "0x1d657ec0b15763170f974abe16396e97b56779cfecf61aa696617f1d3158f0c2";
-export const TESTNET_CK_PACKAGE_ID = "0xbb135cdbe7759cb31f73c17a4f7b4201b932b46fdce1da1efbebe44158b4f085";
+export const TESTNET_CK_PACKAGE_ID = "0x80a111f7fe184e7b87f420d4f7033573dd2db971492024abc155488fde6f178b";
 export const MAINNET_CK_PACKAGE_ID = "0x1234"; // not deployed
 
 export const DEVNET_FAUCET_PACKAGE_ID = "0x1234"; // not deployed
