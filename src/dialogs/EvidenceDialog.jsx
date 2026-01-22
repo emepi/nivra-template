@@ -1,10 +1,10 @@
 import { Form, FormControl, FormField, FormLabel, FormSubmit } from "@radix-ui/react-form"
 import { Button, Dialog, Flex, TextArea, TextField } from "@radix-ui/themes"
 import React from "react";
-import { useNetworkVariable } from "./networkConfig";
+import { useNetworkVariable } from "../networkConfig";
 import { Transaction } from "@mysten/sui/transactions";
 import { useSignAndExecuteTransaction } from "@mysten/dapp-kit";
-import { WALRUS_PUBLISHER_URL } from "./constants";
+import { WALRUS_PUBLISHER_URL } from "../constants";
 
 export const EvidenceDialog = (props) => {
   const [open, setOpen] = React.useState(false);
@@ -22,7 +22,6 @@ export const EvidenceDialog = (props) => {
     let blobId = null;
     let file_name = null;
 
-    // Upload a file to walrus publisher if provided
     if (entries.file.size > 0) {
       const file_type = entries.file.type.split("/");
 
@@ -44,13 +43,14 @@ export const EvidenceDialog = (props) => {
     tx.moveCall({
       target: `${packageId}::evidence::create_evidence`,
       arguments: [
-        tx.object(props.disputeID), // dispute
-        tx.pure.string(entries.description), // desc
-        tx.pure.option('string', blobId), // walrus blob id
+        tx.object(props.disputeID),
+        tx.pure.string(entries.description),
+        tx.pure.option('string', blobId),
         tx.pure.option('string', file_name),
-        tx.pure.option('string', type), // file type
-        tx.pure.option('string', subtype), // file subtype
-        tx.object(partyCap.id.id), // party cap
+        tx.pure.option('string', type),
+        tx.pure.option('string', subtype),
+        tx.pure.bool(false),
+        tx.object(partyCap.id.id),
         tx.object.clock(),
       ]
     });

@@ -1,25 +1,25 @@
-export const DEVNET_PACKAGE_ID = "0xd97a5857507ffc9784349fe42fc5c953193f0ec417d16214437ceceefb94ba97";
-export const TESTNET_PACKAGE_ID = "0xaf23b09e8a9e0cf66755acbf45343c0f5441d4dc20986a5c1d47c35884243818";
+export const DEVNET_PACKAGE_ID = "0x1234";
+export const TESTNET_PACKAGE_ID = "0xe8ba4300c38b346734eb00bb4d0f55a64dc5bc072049baa45d98bca7fa619e3a";
 export const MAINNET_PACKAGE_ID = "0x1234"; // not deployed
 
-export const DEVNET_REGISTRY_ID = "0x7431de559f4220eaf436f67c5aa71b57800750d2f163b50a59acc3ca6a701ccb";
-export const TESTNET_REGISTRY_ID = "0x09e25df9d03dc50cf41ba5f0504dd0bb1d5c731818699bfb1776fab4393e9e5d";
+export const DEVNET_REGISTRY_ID = "0x1234";
+export const TESTNET_REGISTRY_ID = "0x2f72d52046f3341e3c683de79e9002bb6cc37ab18ce809a90dea75afc5bc5aa2";
 export const MAINNET_REGISTRY_ID = "0x1234"; // not deployed
 
-export const DEVNET_COIN_TYPE = "0xd97a5857507ffc9784349fe42fc5c953193f0ec417d16214437ceceefb94ba97::nvr::NVR";
-export const TESTNET_COIN_TYPE = "0xef700b49f19ff87afcdfa5dc6f6e3e8843d34052a908cf0a73e3fc7ee1d713fb::nvr::NVR";
+export const DEVNET_COIN_TYPE = "0x1234";
+export const TESTNET_COIN_TYPE = "0x4c193de92a46d9f375326f0c114653167a90462295cca75d82831da11a9781c7::nvr::NVR";
 export const MAINNET_COIN_TYPE = "0x1234"; // not deployed
 
-export const DEVNET_CK_PACKAGE_ID = "0x1d657ec0b15763170f974abe16396e97b56779cfecf61aa696617f1d3158f0c2";
-export const TESTNET_CK_PACKAGE_ID = "0x80a111f7fe184e7b87f420d4f7033573dd2db971492024abc155488fde6f178b";
+export const DEVNET_CK_PACKAGE_ID = "0x1234";
+export const TESTNET_CK_PACKAGE_ID = "0xc0cd1924ece8f682cf0980ad4c300f99978d4427e67b7b66d36f6d45f03c78a4";
 export const MAINNET_CK_PACKAGE_ID = "0x1234"; // not deployed
 
 export const DEVNET_FAUCET_PACKAGE_ID = "0x1234"; // not deployed
-export const TESTNET_FAUCET_PACKAGE_ID = "0xa450df3e42feed300cdba030165960048e79067d83c1d26263180aea5977c06a";
+export const TESTNET_FAUCET_PACKAGE_ID = "0x027bca26221f0937cef6c390f906b84911a675c3aa1304d28dc335ab0270ff69";
 export const MAINNET_FAUCET_PACKAGE_ID = "0x1234"; // not deployed
 
 export const DEVNET_FAUCET_ID = "0x1234"; // not deployed
-export const TESTNET_FAUCET_ID = "0xa2474ead68d43164ab29809bb5a858cf4ec24fd907dc4871d87e8bb87236e9e0";
+export const TESTNET_FAUCET_ID = "0x457d9b72af952e896f254972666ce28249f07af9e684e68ee0becaac6c29c7e4";
 export const MAINNET_FAUCET_ID = "0x1234"; // not deployed
 
 // testnet

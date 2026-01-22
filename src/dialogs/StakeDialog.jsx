@@ -2,16 +2,15 @@ import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
 import { Form, FormControl, FormField, FormLabel, FormSubmit } from "@radix-ui/react-form";
 import { Dialog, Button, Flex } from "@radix-ui/themes";
 import React from "react";
-import { useNetworkVariable } from "./networkConfig";
+import { useNetworkVariable } from "../networkConfig";
 import { coinWithBalance, Transaction } from "@mysten/sui/transactions";
 
-export const StakeDialog = (props) => {
+const StakeDialog = (props) => {
   const [open, setOpen] = React.useState(false);
   const { mutate: signAndExecute } = useSignAndExecuteTransaction();
-  const suiClient = useSuiClient();
   const packageId = useNetworkVariable('package_id');
   const coinType = useNetworkVariable('nvr_coin_type');
-  const courtId = props.court_id;
+  const courtId = props.courtId;
 
   const submitForm = (event) => {
     event.preventDefault();
@@ -81,3 +80,5 @@ export const StakeDialog = (props) => {
     </Dialog.Root>
   )
 }
+
+export default StakeDialog;

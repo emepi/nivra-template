@@ -1,11 +1,11 @@
 import { ConnectButton, useCurrentAccount, useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
 import { Box, Flex, Heading, Container, Text, Button } from "@radix-ui/themes";
-import { useNetworkVariable } from "./networkConfig";
+import { useNetworkVariable } from "../networkConfig";
 import { useEffect, useState } from "react";
 import { Form, FormControl, FormField, FormLabel, FormSubmit } from "@radix-ui/react-form";
 import { coinWithBalance, Transaction } from "@mysten/sui/transactions";
 
-export const FaucetView = () => {
+const Faucet = () => {
     const suiClient = useSuiClient();
     const faucetPackageId = useNetworkVariable("faucet_package_id");
     const faucetId = useNetworkVariable("faucet_id");
@@ -67,14 +67,6 @@ export const FaucetView = () => {
 
     return (
         <>
-          <Flex position="sticky" p="4" justify="between" align="center" style={{borderBottom: "1px solid var(--gray-a2)",}}>
-            <Box>
-              <Heading>Nivra Template</Heading>
-            </Box>
-            <Box>
-              <ConnectButton />
-            </Box>
-          </Flex>
           <Container p="4" mt="4">
             <Box style={{ backgroundColor: "var(--gray-a2)", borderRadius: "var(--radius-3)", }}>
               <Flex direction="column" align="center" gap="3">
@@ -106,4 +98,6 @@ export const FaucetView = () => {
           </Container>
         </>
     )
-}
+};
+
+export default Faucet;

@@ -9,8 +9,11 @@ import { Theme } from "@radix-ui/themes";
 import App from "./App.js";
 import { networkConfig } from "./networkConfig.ts";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import { DisputeFullView } from "./DisputeFullView.tsx";
-import { FaucetView } from "./FaucetView.jsx";
+import NavBar from "./components/NavBar.jsx";
+import Admin from "./pages/Admin.jsx";
+import Faucet from "./pages/Faucet.jsx"
+import MyCases from "./pages/MyCases.jsx"
+import NivraCourt from "./pages/NivraCourt.jsx"
 
 const queryClient = new QueryClient();
 
@@ -20,13 +23,21 @@ const router = createBrowserRouter([
     Component: App,
   },
   {
-    path: "/disputes/:dispute_id",
-    Component: DisputeFullView,
+    path: "/admin",
+    Component: Admin,
   },
   {
     path: "/faucet",
-    Component: FaucetView,
-  }
+    Component: Faucet,
+  },
+  {
+    path: "/cases",
+    Component: MyCases,
+  },
+  {
+    path: "/cases/:dispute_id",
+    Component: NivraCourt,
+  },
 ])
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -35,7 +46,10 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
       <QueryClientProvider client={queryClient}>
         <SuiClientProvider networks={networkConfig} defaultNetwork="testnet">
           <WalletProvider autoConnect>
-            <RouterProvider router={router} />
+            <div>
+              <NavBar />
+              <RouterProvider router={router} />
+            </div>
           </WalletProvider>
         </SuiClientProvider>
       </QueryClientProvider>
