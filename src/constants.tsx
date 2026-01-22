@@ -1,13 +1,13 @@
 export const DEVNET_PACKAGE_ID = "0x1234";
-export const TESTNET_PACKAGE_ID = "0xcedb7a956ab86211bcf73d06858bbe027a87467587e890555bfaa09ac6814df8";
+export const TESTNET_PACKAGE_ID = "0xe8ba4300c38b346734eb00bb4d0f55a64dc5bc072049baa45d98bca7fa619e3a";
 export const MAINNET_PACKAGE_ID = "0x1234"; // not deployed
 
 export const DEVNET_REGISTRY_ID = "0x1234";
-export const TESTNET_REGISTRY_ID = "0xf66b1d0d9325758189ae2d6011508858ea829fcbf532b488b19079bc5abceb41";
+export const TESTNET_REGISTRY_ID = "0x2f72d52046f3341e3c683de79e9002bb6cc37ab18ce809a90dea75afc5bc5aa2";
 export const MAINNET_REGISTRY_ID = "0x1234"; // not deployed
 
 export const DEVNET_COIN_TYPE = "0x1234";
-export const TESTNET_COIN_TYPE = "0xb689b204bb5a0f8830061e588570fe73d13af99c50ea407b130a9fdfc94e6164::nvr::NVR";
+export const TESTNET_COIN_TYPE = "0x4c193de92a46d9f375326f0c114653167a90462295cca75d82831da11a9781c7::nvr::NVR";
 export const MAINNET_COIN_TYPE = "0x1234"; // not deployed
 
 export const DEVNET_CK_PACKAGE_ID = "0x1234";
@@ -15,11 +15,11 @@ export const TESTNET_CK_PACKAGE_ID = "0xc0cd1924ece8f682cf0980ad4c300f99978d4427
 export const MAINNET_CK_PACKAGE_ID = "0x1234"; // not deployed
 
 export const DEVNET_FAUCET_PACKAGE_ID = "0x1234"; // not deployed
-export const TESTNET_FAUCET_PACKAGE_ID = "0xb4987cdc7d33157b0983f65d3f0105c0bafe176da0013bd0dbe3ade30828a49b";
+export const TESTNET_FAUCET_PACKAGE_ID = "0x027bca26221f0937cef6c390f906b84911a675c3aa1304d28dc335ab0270ff69";
 export const MAINNET_FAUCET_PACKAGE_ID = "0x1234"; // not deployed
 
 export const DEVNET_FAUCET_ID = "0x1234"; // not deployed
-export const TESTNET_FAUCET_ID = "0x9bc2eac97d8d494f9c3a82d89930b74063f4c3f3afc07188771eeab8db1bfadc";
+export const TESTNET_FAUCET_ID = "0x457d9b72af952e896f254972666ce28249f07af9e684e68ee0becaac6c29c7e4";
 export const MAINNET_FAUCET_ID = "0x1234"; // not deployed
 
 // testnet
