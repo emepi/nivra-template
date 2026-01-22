@@ -98,7 +98,7 @@ const CourtSelector = () => {
           }
         })}
       </Flex>
-      <Flex gap="2">
+      <Flex gap="2" direction="column">
         {courts.get(category)?.map(courtData => 
           <CourtView
             key={courtData.name}
