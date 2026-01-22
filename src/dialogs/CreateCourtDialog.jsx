@@ -1,11 +1,13 @@
 import { Form, FormControl, FormField, FormLabel, FormSubmit } from "@radix-ui/react-form"
 import { Button, Dialog, Flex, TextArea, TextField } from "@radix-ui/themes"
-import React, { FormEvent } from "react";
-import { useNetworkVariable } from "./networkConfig";
+import React from "react";
+import { useNetworkVariable } from "../networkConfig";
 import { Transaction } from "@mysten/sui/transactions";
 import { useSignAndExecuteTransaction, useSuiClient } from "@mysten/dapp-kit";
+import { SEAL_KEY_SERVERS, SEAL_PUBLIC_KEYS } from "../constants";
 
-export const CreateCourtDialog = (props: { adminCapId: string; }) => {
+// TODO: Add inputs for the remaining options
+export const CreateCourtDialog = (props) => {
   const [open, setOpen] = React.useState(false);
   const { mutate: signAndExecute } = useSignAndExecuteTransaction();
   const suiClient = useSuiClient();
@@ -13,31 +15,36 @@ export const CreateCourtDialog = (props: { adminCapId: string; }) => {
   const courtRegistryId = useNetworkVariable("registry_id");
   const nivraAdminCapId = props.adminCapId;
 
-  const submitForm = (event: FormEvent<HTMLFormElement>) => {
+  const submitForm = (event) => {
     event.preventDefault();
-    const entries = Object.fromEntries(new FormData(event.target as HTMLFormElement));
+    const entries = Object.fromEntries(new FormData(event.target));
     const tx = new Transaction();
 
-    // Build a Move call transaction to invoke the `create_court` function
-    // from the `court` module in your on-chain package.
     tx.moveCall({
       target: `${packageId}::court::create_court`,
       arguments: [
-        tx.pure.bool(false), // is AI court?
-        tx.pure.string(entries.category as string), // Court category
-        tx.pure.string(entries.name as string), // Court name 
-        tx.pure.option('string', null), // Optional court icon (currently none/null)
-        tx.pure.string(entries.description as string), // Text description of the court
-        tx.pure.vector('string', []), // List of required skills or tags (empty for now)
-        tx.pure.u64(entries.min_stake as string), // Minimum stake required to participate
-        tx.pure.u64(entries.fee_rate as string), // Fee rate applied within the court
-        tx.pure.u64(900000), // Default evidence submission period (in milliseconds)
-        tx.pure.u64(900000), // Default voting period (in milliseconds)
-        tx.pure.u64(900000), // Default appeal period (in milliseconds)
-        tx.object(courtRegistryId), // Mutable reference to the main Court Registry object
-        tx.object(nivraAdminCapId), // Admin capability object, proving caller has permission
-        // ctx: &mut TxContext
-        // (This argument is automatically added by the Sui runtime; not provided manually)
+        tx.object(courtRegistryId),
+        tx.object(nivraAdminCapId),
+        tx.pure.bool(false),
+        tx.pure.string(entries.category),
+        tx.pure.string(entries.name),
+        tx.pure.string(entries.description),
+        tx.pure.string(entries.skills),
+        tx.pure.u64(0),
+        tx.pure.u64(15),
+        tx.pure.u64(15),
+        tx.pure.u64(15),
+        tx.pure.u64(5),
+        tx.pure.u64(entries.dispute_fee),
+        tx.pure.u64(entries.min_stake),
+        tx.pure.u64(900000),
+        tx.pure.u64(900000),
+        tx.pure.u64(900000),
+        tx.pure.u64(900000),
+        tx.pure.u64(900000),
+        tx.pure('vector<address>', SEAL_KEY_SERVERS),
+        tx.pure('vector<vector<u8>>', SEAL_PUBLIC_KEYS),
+        tx.pure.u8(1),
       ]
     });
 
@@ -102,6 +109,16 @@ export const CreateCourtDialog = (props: { adminCapId: string; }) => {
                 />
               </FormControl>
             </FormField>
+            <FormField name="skills">
+              <FormLabel>Skills</FormLabel>
+              <FormControl asChild>
+                <TextArea 
+                  placeholder="Enter skill requirements…" 
+                  name="skills"
+                  required
+                />
+              </FormControl>
+            </FormField>
             <Flex gap={"3"}>
               <FormField name="min_stake">
                 <Flex direction="column" gap="3">
@@ -111,11 +128,11 @@ export const CreateCourtDialog = (props: { adminCapId: string; }) => {
                   </FormControl>
                 </Flex>
               </FormField>
-              <FormField name="fee_rate">
+              <FormField name="dispute_fee">
                 <Flex direction="column" gap="3">
-                  <FormLabel>Fee rate</FormLabel>
+                  <FormLabel>Dispute fee</FormLabel>
                   <FormControl asChild>
-                    <input type="number" name="fee_rate" min="0" required/>
+                    <input type="number" name="dispute_fee" min="0" required/>
                   </FormControl>
                 </Flex>
               </FormField>
@@ -134,4 +151,4 @@ export const CreateCourtDialog = (props: { adminCapId: string; }) => {
       </Dialog.Content>
     </Dialog.Root>
   )
-}
+};
