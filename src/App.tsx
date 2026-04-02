@@ -1,15 +1,11 @@
-import { Flex } from "@radix-ui/themes";
-import CourtSelector from "./components/CourtSelector.jsx";
 
 function App() {
 
   return (
     <>
-      <Flex p="4">
-        { CourtSelector() }
-      </Flex>
+      <div>hello world!</div>
     </>
-  );
+  )
 }
 
-export default App;
+export default App
