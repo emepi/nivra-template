@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { DAppKitProvider } from '@mysten/dapp-kit-react'
 import { dAppKit } from './dapp-kit.ts'
+import './index.css'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
