@@ -61,9 +61,9 @@ export default function NivsterView({ onBack }: NivsterViewProps) {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 p-8 max-w-7xl w-full mx-auto">
+      <main className="flex-1 min-h-0 p-8 max-w-7xl w-full mx-auto">
         {activeTab === 'dashboard' && <NivsterDashboard />}
-        {activeTab === 'courts'    && <CourtExplorer />}
+        {activeTab === 'courts'    && <CourtExplorer nivsterMode />}
         {activeTab === 'cases'     && (
           <div className="flex flex-col items-center justify-center p-20 text-[#473a87]/40">
             <h2 className="text-3xl font-bold mb-2 text-purple-600">My Cases</h2>
