@@ -1,10 +1,24 @@
 import logo from './assets/icon.svg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import PartyView from './PartyView'
 import NivsterView from './NivsterView'
 
+const ACTIVE_VIEW_STORAGE_KEY = 'nivra.activeView';
+type ActiveView = 'portal' | 'nivster' | 'party';
+
 function App() {
-  const [activeView, setActiveView] = useState<'portal' | 'nivster' | 'party'>('portal');
+  const [activeView, setActiveView] = useState<ActiveView>(() => {
+    const savedView = localStorage.getItem(ACTIVE_VIEW_STORAGE_KEY);
+    if (savedView === 'portal' || savedView === 'nivster' || savedView === 'party') {
+      return savedView;
+    }
+
+    return 'portal';
+  });
+
+  useEffect(() => {
+    localStorage.setItem(ACTIVE_VIEW_STORAGE_KEY, activeView);
+  }, [activeView]);
 
   if (activeView === 'party') {
     return <PartyView onBack={() => setActiveView('portal')} />;

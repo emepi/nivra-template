@@ -7,18 +7,18 @@ export const NETWORK_CONFIG: Record<Network, {
   packageId: string;
   registryId: string,
   nvrPackageId: string,
-  faucetPackageId: string,
-  faucetId: string,
+  marketplacePackageId: string,
+  marketplaceId: string,
   sealKeyServers: string[],
   sealPublicKeys: number[][],
 }> = {
   testnet: {
     grpcUrl: 'https://fullnode.testnet.sui.io:443',
-    packageId: '0x8f019fff9d30b2737ec472940fa6831d7b414dd45ff8c4f16da7852358a96ab1',
-    registryId: '0xd569956659ea500747e202fecb9008e95ea197fa9f1e66741acc09bafbf7fcb6',
-    nvrPackageId: '0xc8fed8d93971ac293afeb1241d8e1bd8c7e90279b310d4e02307b3bcc02fe50e',
-    faucetPackageId: '0xeeefc83fb6c916a81753f84fc64be18f427e8f6cba07fb5acf49f827b4dbf49d',
-    faucetId: '0xfd5613a1d943f3be844f35c74bc2ba633a9c6f2b0cf3ad8cfee651d07caeafbb',
+    packageId: '0xb8399849bab75d25a75232bbc8f420413a8058e68bbc408f66320df835c404d6',
+    registryId: '0x41e9dbe1d4ce58d8c2139c8f0f2cd9979cbb541f2cc4c9bb666d587b8c3b4182',
+    nvrPackageId: '0x6ef75023397a84c9423bdae87d28f8cbc61f0be7e4bd691943b07f27968e2572',
+    marketplacePackageId: '0x55630b3f6b30b470ea843ee0f746e6a8b68a7435319046773cc10e836e9e6e74',
+    marketplaceId: '0x05a4c8ea05f1a67ac2d22594bd99957aff54ec2fb67aa51498cc8caf57ae66b2',
     sealKeyServers: [
       "0x73d05d62c18d9374e3ea529e8e0ed6161da1a141a94d3f76ae3fe4e99356db75",
       "0xf5d14a81a982144ae441cd7d64b09027f116a468bd36e7eca494f750591623c8",

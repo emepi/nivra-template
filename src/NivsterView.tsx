@@ -1,15 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ConnectButton } from '@mysten/dapp-kit-react/ui';
 import logo from './assets/icon.svg';
 import NivsterDashboard from './NivsterDashboard';
 import CourtExplorer from './CourtExplorer';
+
+const NIVSTER_TAB_STORAGE_KEY = 'nivra.nivster.activeTab';
+type NivsterTab = 'dashboard' | 'courts' | 'cases';
 
 interface NivsterViewProps {
   onBack: () => void;
 }
 
 export default function NivsterView({ onBack }: NivsterViewProps) {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'courts' | 'cases'>('dashboard');
+  const [activeTab, setActiveTab] = useState<NivsterTab>(() => {
+    const savedTab = localStorage.getItem(NIVSTER_TAB_STORAGE_KEY);
+    if (savedTab === 'dashboard' || savedTab === 'courts' || savedTab === 'cases') {
+      return savedTab;
+    }
+
+    return 'dashboard';
+  });
+
+  useEffect(() => {
+    localStorage.setItem(NIVSTER_TAB_STORAGE_KEY, activeTab);
+  }, [activeTab]);
 
   return (
     <div className="min-h-screen bg-white text-[#473a87] font-sans flex flex-col">

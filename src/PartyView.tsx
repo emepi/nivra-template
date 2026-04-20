@@ -6,6 +6,7 @@ import { useNetworkConfig } from './constants';
 import AdminPanel from './AdminPanel';
 import Dashboard from './Dashboard';
 import CourtExplorer from './CourtExplorer';
+import Marketplace from './Marketplace';
 
 interface PartyViewProps {
   onBack: () => void;
@@ -94,12 +95,7 @@ export default function PartyView({ onBack }: PartyViewProps) {
       <main className="flex-1 min-h-0 p-8 max-w-7xl w-full mx-auto">
         {activeTab === 'dashboard' && <Dashboard />}
         {activeTab === 'courts' && <CourtExplorer />}
-        {activeTab === 'marketplace' && (
-          <div className="flex flex-col items-center justify-center p-20 text-[#473a87]/40">
-            <h2 className="text-3xl font-bold mb-2 text-purple-600">Marketplace</h2>
-            <p>Coming soon.</p>
-          </div>
-        )}
+        {activeTab === 'marketplace' && <Marketplace />}
         {activeTab === 'admin' && isAdmin && (
           <div className="w-full">
             <AdminPanel />

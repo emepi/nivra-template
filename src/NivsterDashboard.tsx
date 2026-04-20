@@ -75,8 +75,8 @@ const mockJurorCases = [
 ];
 
 const outcomeStyle: Record<string, { text: string; bg: string }> = {
-  Correct:   { text: 'text-emerald-700', bg: 'bg-emerald-50' },
-  Incorrect: { text: 'text-rose-700',    bg: 'bg-rose-50' },
+  Correct: { text: 'text-emerald-700', bg: 'bg-emerald-50' },
+  Incorrect: { text: 'text-rose-700', bg: 'bg-rose-50' },
 };
 
 export default function NivsterDashboard() {
@@ -85,9 +85,9 @@ export default function NivsterDashboard() {
   const toggle = (id: string) => setExpandedId(prev => prev === id ? null : id);
 
   const totalCases = mockJurorCases.length;
-  const wonCases   = mockJurorCases.filter(c => c.outcome === 'Correct').length;
-  const totalNvr   = mockJurorCases.reduce((sum, c) => sum + c.rewardNvr, 0);
-  const totalSui   = mockJurorCases.reduce((sum, c) => sum + c.rewardSui, 0);
+  const wonCases = mockJurorCases.filter(c => c.outcome === 'Correct').length;
+  const totalNvr = mockJurorCases.reduce((sum, c) => sum + c.rewardNvr, 0);
+  const totalSui = mockJurorCases.reduce((sum, c) => sum + c.rewardSui, 0);
 
   const visible = mockJurorCases.filter(c => caseTab === 'active' ? c.status === 'Active' : c.status === 'Past');
 
@@ -97,10 +97,10 @@ export default function NivsterDashboard() {
       {/* Compact Stats Row */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Total Cases',  value: totalCases, color: 'text-[#473a87]',    border: 'border-[#473a87]/10' },
-          { label: 'Correct Votes',value: wonCases,   color: 'text-emerald-600',  border: 'border-emerald-100' },
-          { label: 'NVR Earned',   value: `${totalNvr} NVR`, color: 'text-purple-600', border: 'border-purple-100' },
-          { label: 'SUI Earned',   value: `${totalSui} SUI`, color: 'text-blue-600',   border: 'border-blue-100' },
+          { label: 'Total Cases', value: totalCases, color: 'text-[#473a87]', border: 'border-[#473a87]/10' },
+          { label: 'Correct Votes', value: wonCases, color: 'text-emerald-600', border: 'border-emerald-100' },
+          { label: 'NVR Earned', value: `${totalNvr} NVR`, color: 'text-purple-600', border: 'border-purple-100' },
+          { label: 'SUI Earned', value: `${totalSui} SUI`, color: 'text-blue-600', border: 'border-blue-100' },
         ].map(stat => (
           <div key={stat.label} className={`bg-white border ${stat.border} p-4 rounded-2xl shadow-sm flex items-center justify-between`}>
             <span className="text-[#473a87]/50 font-semibold text-sm">{stat.label}</span>
@@ -182,7 +182,7 @@ export default function NivsterDashboard() {
                         <div className="flex gap-1">
                           {PERIODS.map((period, idx) => {
                             const activeIdx = PERIODS.indexOf(c.currentPeriod);
-                            const isPast    = idx < activeIdx;
+                            const isPast = idx < activeIdx;
                             const isCurrent = idx === activeIdx;
                             return (
                               <div key={period} className="flex-1 flex flex-col items-center gap-1">
